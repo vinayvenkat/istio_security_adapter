@@ -1,0 +1,58 @@
+application_api_version: v1beta1
+properties:
+  name:
+    type: string
+    x-google-marketplace:
+      type: NAME
+  namespace:
+    type: string
+    x-google-marketplace:
+      type: NAMESPACE
+  appName:
+    type: string
+    title: Specify the app name (recommend to name it identical to the name)
+    maxLength: 128
+  securityPolicyEndpointType:
+    type: string
+    title: Specify the type of the policy endpoint ('panorama' or 'simulator')
+    maxLength: 10
+  securityPolicyApiEndpoint:
+    type: string
+    title: Specify the IP address or the DNS name of the security policy API endpoint 
+    maxLength: 128
+  securityPolicyApiPort:
+    type: string
+    title: Specify the port number on which the security policy API endpoint is accessed on 
+    maxLength: 128
+  panoramaUsername:
+    type: string
+    title: Base64 encoded username for Panorama (if EndpointType == 'panorama')
+    maxLength: 50
+  panoramaPassword:
+    type: string
+    title: Base64 encoded password for Panorama (if EndpointType == 'panorama')
+    maxLength: 50
+  securityAdapterImageName:
+    type: string
+    default: $REGISTRY:1.0
+    x-google-marketplace:
+      type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: securityAdapterImageRepo
+            after: securityAdapterImageTag
+required:
+- name
+- namespace
+- securityPolicyEndpointType
+- securityAdapterImageName 
+- appName 
+- securityPolicyApiEndpoint
+- securityPolicyApiPort
+form:
+- widget: help
+  description:  The Palo Alto Networks Security adapter provides visibility and policy enforcement for the Istio Service Mesh </i>
+x-google-marketplace:
+    istio:
+      type: OPTIONAL 
